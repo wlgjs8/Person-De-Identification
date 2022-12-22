@@ -68,7 +68,7 @@ class MainWindow(QMainWindow):
         self.file_name = getOpenFilesAndDirs()
 
         if self.file_name == []:
-            QMessageBox.about(self, 'Warning', '파일을 선택해주세요!')
+            QMessageBox.about(self, 'Warning', '파일 혹은 사진을 선택해주세요!')
         else:
             if os.path.isfile(self.file_name[0]):
                 if len(self.file_name) == 1:
@@ -191,14 +191,17 @@ class MainWindow(QMainWindow):
             QMessageBox.about(self, 'Warning', 'No File Selected')
         else:
             change_save_dir_path(save_dir_path)
-            has_error, ERROR_IDX = remove_eyebrow_all(self.dir_name, self.file_names)
-            if(has_error):
-                if ERROR_IDX == ERROR_NO_PREDICTION:
-                    QMessageBox.about(self, 'Warning', '입력 영상에서 얼굴을 찾을 수 없습니다!')
-                elif ERROR_IDX == ERROR_SAME_INPUT_AND_OUTPUT:
-                    QMessageBox.about(self, 'Warning', '입력 폴더와 저장 폴더의 위치가 동일합니다!')
+            if len(self.file_names) < 1:
+                QMessageBox.about(self, 'Warning', '사진을 입력해주세요!')
             else:
-                QMessageBox.information(self, 'Success', 'Success!')
+                has_error, ERROR_IDX = remove_eyebrow_all(self.dir_name, self.file_names)
+                if(has_error):
+                    if ERROR_IDX == ERROR_NO_PREDICTION:
+                        QMessageBox.about(self, 'Warning', '입력 영상에서 얼굴을 찾을 수 없습니다!')
+                    elif ERROR_IDX == ERROR_SAME_INPUT_AND_OUTPUT:
+                        QMessageBox.about(self, 'Warning', '입력 폴더와 저장 폴더의 위치가 동일합니다!')
+                else:
+                    QMessageBox.information(self, 'Success', 'Success!')
         # save_results(self.file_name[0])
 
 if __name__ == '__main__':
