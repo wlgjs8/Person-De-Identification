@@ -1,0 +1,11 @@
+*.pth
+*.pt
+*.jpg
+*.jpeg
+*.zip
+
+.vs/
+
+dist/
+model/
+build/
